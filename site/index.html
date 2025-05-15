@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фреймворк для алгоритмической торговли на финансовых рынках</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .subtitle-muted {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.85;
+            margin-bottom: 2rem;
+        }
+        .screenshot-container {
+            width: 100%;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        .journal-screenshot {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+        .about-page {
+            padding: 4rem 0;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+        .contact-item:hover {
+            color: #ff4444;
+        }
+        .contact-item i {
+            margin-right: 0.5rem;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .news-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .news-content {
+            padding: 1.5rem;
+        }
+        .news-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 0.8rem;
+        }
+        .news-text {
+            line-height: 1.5;
+            color: #333;
+            font-size: 0.95em;
+        }
+        @media (max-width: 1024px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Фреймворк для алгоритмической торговли</h1>
+            </div>
+            <ul>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="#team">Команда</a></li>
+                <li><a href="#details">Журнал</a></li>
+                <li><a href="#contact">Ресурсы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Простая оболочка на Go</h1>
+                <p class="subtitle-muted">За последнии 30 лет алгоритмическая торговля занимает всё большую долю в мире финансовых сделок. Около 92% сделок на валютных рынках совершаются не людьми, а компьютерами. Но в России нет открытых и полностью готовых фреймворков для создания и поддержки стратегий торговли. Именно поэтому важно создать инструмент, который мог бы удовлетворять потребности на всём жизненном пути стратегии от разработки идеи до тестирования и торговли реальными активами.</p>
+                <a href="about.html" class="cta-button">Узнать больше</a>
+            </div>
+        </section>
+
+        <section id="team" class="section">
+            <div class="container">
+                <h2>Наша команда</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="member-name">
+                            <h3>Политаева Мария</h3>
+                            <h4>Владимировна</h4>
+                        </div>
+                        <div class="member-roles">
+                            <p>Группа: Визуализация (до 17.03.2025)</p>
+                            <p>Группа: Банк стратегий</p>
+                            <p>Создание статей по трейдингу</p>
+                            <p>Группа: Визуализация стратегий в виде графиков</p>
+                        </div>
+                        <div class="tech-roles">
+                            <span class="tech-tag">Backend-разработчик</span>
+                            <span class="tech-tag">Разработчик на Go</span>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="member-name">
+                            <h3>Серов Алексей</h3>
+                            <h4>Сергеевич</h4>
+                        </div>
+                        <div class="member-roles">
+                            <p>Группа: Визуализация (до 17.03.2025)</p>
+                            <p>Группа: Банк стратегий</p>
+                            <p>Создание статей по трейдингу</p>
+                            <p>Группа: Визуализация стратегий в виде графиков</p>
+                        </div>
+                        <div class="tech-roles">
+                            <span class="tech-tag">Backend-разработчик</span>
+                            <span class="tech-tag">Разработчик на Go</span>
+                            <span class="tech-tag">HTML</span>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="member-name">
+                            <h3>Широбокова Полина</h3>
+                            <h4>Александровна</h4>
+                        </div>
+                        <div class="member-roles">
+                            <p>Группая: Банк стратегий</p>
+                            <p>Создание статей по трейдингу</p>
+                            <p>PostgreSQL</p>
+                            <p>Создание базы данных для параметров стратегий</p>
+                        </div>
+                        <div class="tech-roles">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">UI</span>
+                            <span class="tech-tag">Frontend-разработчик</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-types">
+                    <div class="project-type-regular">
+                        <p>ПД</p>
+                    </div>
+                    <div class="project-type-tech">
+                        <span class="tech-tag">ПП</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="details" class="section">
+            <div class="container">
+                <h2>Журнал</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="images/screenshot.png" alt="Скриншот проекта" class="news-image">
+                        <div class="news-content">
+                            <div class="news-date">13 мая 2025</div>
+                            <div class="news-text">
+                                <p>Продолжается работа над статьями проекта. На данный момент в репозиторий добавлено более 30 статей по трейдингу и стратегиям в алгоритмической торговле. В папке documentation добавлен раздел _mediafiles с изображениями и материалами работ.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="images/screen.png" alt="Скриншот проекта" class="news-image">
+                        <div class="news-content">
+                            <div class="news-date">2 апреля 2025</div>
+                            <div class="news-text">
+                                <p>Закончен перенос базы данных с результатами тестирования стратегий по выбранным параметрам. Изменения обусловлены простотой и легкостью в обращении для участников группы тестирования</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="images/graph.png" alt="График проекта" class="news-image">
+                        <div class="news-content">
+                            <div class="news-date">9 марта 2025</div>
+                            <div class="news-text">
+                                <p>Завершена работа над созданием архива с графиками, визуализирующими стратегии. Данные понадобятся для работы других групп, группа визуализации расформировывается, участники переходят к работе других отделов проекта.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Ресурсы</h2>
+                <div class="resources-container">
+                    <div class="resource-section">
+                        <h3>Репозиторий проекта</h3>
+                        <div class="contact-info">
+                            <a href="https://github.com/xamar-sharp/troida" class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="resource-section">
+                        <h3>Организация-партнер</h3>
+                        <div class="contact-info">
+                            <a href="https://mospolytech.ru/" class="contact-item">
+                                <i class="fas fa-university"></i>
+                                <span>Московский Политех</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="resource-section">
+                        <h3>Полезные статьи</h3>
+                        <div class="contact-info">
+                            <a href="https://ru.wikipedia.org/wiki/Интернет-трейдинг" class="contact-item">
+                                <i class="fas fa-book"></i>
+                                <span>Трейдинг - Википедия</span>
+                            </a>
+                            <a href="https://cyberleninka.ru/article/n/internet-treyding-vozmozhnosti-i-riski" class="contact-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Интернет-трейдинг: возможности и риски</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="project-info">
+                    <p>Проектная деятельность: Простая оболочка на Go</p>
+                    <p>Проектная практика: Фреймворк для алгоритмической торговли на финансовых рынках</p>
+                </div>
+                <div class="team-links">
+                    <p>Команда проекта: 
+                        <a href="mailto:poletama@yandex.ru" class="team-link">Политаева М.В.</a>, 
+                        <a href="mailto:0609aleksey@gmail.com" class="team-link">Серов А.С.</a>, 
+                        <a href="mailto:ru_address_psh@mail.ru" class="team-link">Широбокова П.А.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
