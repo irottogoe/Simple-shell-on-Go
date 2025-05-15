@@ -19,19 +19,28 @@ func main() {
 	line := liner.NewLiner()
 	defer line.Close()
 
-	line.SetCtrlCAborts(true) // Ctrl+C завершает программу
+	line.SetCtrlCAborts(true) // Ctrl+C завершает ввод команды (не всю программу)
+
+	// список встроенных команд
+	commands := []string{"cd", "exit", "history", "help"}
 
 	// автодополнение
 	line.SetCompleter(func(line string) (c []string) {
 		// список всех файлов
 		files, err := os.ReadDir(".")
-		if err != nil {
-			return nil // если ошибка, то ничего не делаем
+		if err == nil {
+			for _, file := range files {
+				name := file.Name()
+				if strings.HasPrefix(name, line) { // если имя файла начинается с введенной строки
+					c = append(c, name) // добавляем имя файла в список
+				}
+			}
 		}
-		for _, file := range files {
-			name := file.Name()
-			if strings.HasPrefix(name, line) { // если имя файла начинается с введенной строки
-				c = append(c, name) // добавляем имя файла в список
+
+		// список всех команд
+		for _, command := range commands {
+			if strings.HasPrefix(command, line) { // если команда начинается с введенной строки
+				c = append(c, command) // добавляем команду в список
 			}
 		}
 		return
@@ -42,6 +51,9 @@ func main() {
 		line.ReadHistory(f) // читаем историю из файла и добавляем в историю
 		f.Close()
 	}
+
+	// список всех предыдущих команд
+	var historyList []string
 
 	// сама программа
 	for {
@@ -56,6 +68,28 @@ func main() {
 		input = strings.TrimSpace(input) // удаляем пробелы
 		if input == "" {
 			continue // если пустая строка, то продолжаем цикл
+		}
+
+		// обработка встроенной команды history
+		if input == "history" {
+			for i, cmd := range historyList {
+				fmt.Printf("%d: %s\n", i+1, cmd) // выводим все предыдущие команды
+			}
+			continue
+		}
+
+		historyList = append(historyList, input) // добавляем команду в историю
+		line.AppendHistory(input)                // сохраняем команду в историю
+
+		// обработка встроенной команды help
+		if input == "help" {
+			fmt.Println("Встроенные команды:")
+			fmt.Println("  cd <путь>     — сменить директорию")
+			fmt.Println("  exit          — выйти из оболочки")
+			fmt.Println("  history       — показать историю команд")
+			fmt.Println("  help          — показать список команд")
+			line.AppendHistory(input) // сохраняем команду в историю
+			continue
 		}
 
 		line.AppendHistory(input) // добавляем команду в историю
@@ -99,7 +133,7 @@ func execInput(input string) error {
 	}
 
 	// выполняем команду и передаем аргументы
-	// args[0] - имя программы args[1:] - аргументы программы
+	// args[0] - имя программы, args[1:] - аргументы программы
 	cmd := exec.Command(args[0], args[1:]...)
 	cmd.Stdin = os.Stdin   // ввод из терминала
 	cmd.Stderr = os.Stderr // вывод ошибок в терминал
