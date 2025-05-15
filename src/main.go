@@ -1,58 +1,94 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/peterh/liner" // библиотека для поддержки истории команд
 )
 
+const historyFile = ".shell_history" // файл для хранения истории команд
+
 func main() {
-	reader := bufio.NewReader(os.Stdin)
+
+	// создаем новый ввод с клавиатуры
+	line := liner.NewLiner()
+	defer line.Close()
+
+	line.SetCtrlCAborts(true) // Ctrl+C завершает программу
+
+	// загружаем историю команд из файла
+	if f, err := os.Open(historyFile); err == nil {
+		line.ReadHistory(f) // читаем историю из файла и добавляем в историю
+		f.Close()
+	}
+
+	// сама программа
 	for {
-		fmt.Print("> ")
-		// Читаем ввод с клавиатуры
-		input, err := reader.ReadString('\n')
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		input, err := line.Prompt("> ") // ждем ввода от пользователя
+		if err == liner.ErrPromptAborted || err == io.EOF {
+			break // если Ctrl+C или Ctrl+D, то выходим из программы
+		} else if err != nil {
+			fmt.Println("Error:", err)
+			continue // если ошибка, то продолжаем цикл
 		}
 
-		// Обработка ввода
-		if err = execInput(input); err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		input = strings.TrimSpace(input) // удаляем пробелы
+		if input == "" {
+			continue // если пустая строка, то продолжаем цикл
 		}
+
+		line.AppendHistory(input) // добавляем команду в историю
+
+		if err := execInput(input); err != nil { // выполняем команду
+			fmt.Fprintln(os.Stderr, "Error:", err) // если ошибка, то выводим ее
+		}
+	}
+
+	// сохраняем историю команд в файл
+	if f, err := os.Create(historyFile); err == nil {
+		line.WriteHistory(f) // записываем историю в файл
+		f.Close()
+	} else {
+		fmt.Fprintln(os.Stderr, "Error:", err) // если ошибка, то выводим ее
 	}
 }
 
 func execInput(input string) error {
-	// Удаляем /n
+	// удаляем /r и /n
 	input = strings.TrimRight(input, "\r\n")
 
-	// Разделяем ввод на аргументы
-	args := strings.Split(input, " ")
+	// разбиваем строку на аргументы
+	args := strings.Fields(input)
 
-	// Проверяем наличие аргументов
+	if len(args) == 0 {
+		return nil // если пустая строка, то ничего не делаем
+	}
+
+	// проверяем наличие аргументов
 	switch args[0] {
 	case "cd":
-		// Если cd без аргументов, то возвращаем ошибку
+		// если cd без аргументов, то возвращаем ошибку
 		if len(args) < 2 {
 			return errors.New("path required")
 		}
-		// Если cd с аргументами, то меняем директорию
+		// если cd с аргументами, то меняем директорию
 		return os.Chdir(args[1])
 	case "exit":
-		os.Exit(0)
+		os.Exit(0) // если exit, то выходим из программы
 	}
 
-	// Передаем программу и аргументы отдельно
+	// выполняем команду и передаем аргументы
+	// args[0] - имя программы args[1:] - аргументы программы
 	cmd := exec.Command(args[0], args[1:]...)
+	cmd.Stdin = os.Stdin   // ввод из терминала
+	cmd.Stderr = os.Stderr // вывод ошибок в терминал
+	cmd.Stdout = os.Stdout // вывод результата в терминал
 
-	// Правильное устройство вывода
-	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
-
-	// Выполняем программу и возвращаем ошибку
+	// выполняем программу и возвращаем ошибку
 	return cmd.Run()
 }
