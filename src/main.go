@@ -21,6 +21,22 @@ func main() {
 
 	line.SetCtrlCAborts(true) // Ctrl+C завершает программу
 
+	// автодополнение
+	line.SetCompleter(func(line string) (c []string) {
+		// список всех файлов
+		files, err := os.ReadDir(".")
+		if err != nil {
+			return nil // если ошибка, то ничего не делаем
+		}
+		for _, file := range files {
+			name := file.Name()
+			if strings.HasPrefix(name, line) { // если имя файла начинается с введенной строки
+				c = append(c, name) // добавляем имя файла в список
+			}
+		}
+		return
+	})
+
 	// загружаем историю команд из файла
 	if f, err := os.Open(historyFile); err == nil {
 		line.ReadHistory(f) // читаем историю из файла и добавляем в историю
