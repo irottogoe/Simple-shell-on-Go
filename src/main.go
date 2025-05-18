@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 
 	"github.com/peterh/liner" // библиотека для поддержки истории команд
 )
@@ -22,7 +23,7 @@ func main() {
 	line.SetCtrlCAborts(true) // Ctrl+C завершает ввод команды (не всю программу)
 
 	// список встроенных команд
-	commands := []string{"cd", "exit", "history", "help"}
+	commands := []string{"cd", "exit", "history", "help", "pwd", "date", "clear"}
 
 	// автодополнение
 	line.SetCompleter(func(line string) (c []string) {
@@ -88,6 +89,9 @@ func main() {
 			fmt.Println("  exit          — выйти из оболочки")
 			fmt.Println("  history       — показать историю команд")
 			fmt.Println("  help          — показать список команд")
+			fmt.Println("  pwd           — показать текущую директорию")
+			fmt.Println("  date          — показать текущую дату и время")
+			fmt.Println("  clear         — очистить экран")
 			line.AppendHistory(input) // сохраняем команду в историю
 			continue
 		}
@@ -130,6 +134,22 @@ func execInput(input string) error {
 		return os.Chdir(args[1])
 	case "exit":
 		os.Exit(0) // если exit, то выходим из программы
+	case "pwd":
+		// путь текущей директории
+		dir, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		fmt.Println(dir)
+		return nil
+	case "date":
+		// текущая дата и время
+		fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
+		return nil
+	case "clear":
+		// ANSI escape-код: очистка экрана и возврат курсора в верхний левый угол
+		fmt.Print("\033[H\033[2J")
+		return nil
 	}
 
 	// выполняем команду и передаем аргументы
