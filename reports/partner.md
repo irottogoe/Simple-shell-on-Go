@@ -10,4 +10,4 @@
 — призы и подарки и многое-многое другое.
 
 Наша группа посетила мероприятие:
-![Иллюстрация к проекту](https://github.com/irottogoe/Simple-shell-on-Go/blob/main/reports/%D0%BA%D0%B0%D1%80%D1%8C%D0%B5%D1%80%D0%BD%D1%8B%D0%B9%20%D0%BC%D0%B0%D1%80%D0%B0%D1%84%D0%BE%D0%BD.jpg)
+![Иллюстрация к проекту](https://github.com/irottogoe/Simple-shell-on-Go/blob/main/reports/photo.jpg)
